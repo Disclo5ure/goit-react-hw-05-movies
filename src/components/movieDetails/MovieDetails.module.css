@@ -1,0 +1,21 @@
+.mainInfo {
+  display: flex;
+  gap: 20px;
+  border-bottom: 1px solid black;
+}
+
+.goBack {
+  display: block;
+}
+
+.poster {
+  margin-bottom: 10px;
+}
+
+.genre {
+  margin-right: 10px;
+}
+
+.additionalInfo {
+  border-bottom: 1px solid black;
+}

@@ -11,7 +11,7 @@ const Movies = lazy(() => import('./movies/Movies'));
 export const App = () => {
   return (
     <Routes>
-      <Route path="/" element={<SharedLayout />}>
+      <Route path="https://disclo5ure.github.io/" element={<SharedLayout />}>
         <Route index element={<Home />} />
         <Route path="movies/:id" element={<MovieDetails />}>
           <Route path="cast" element={<Cast />} />

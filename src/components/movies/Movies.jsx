@@ -31,6 +31,7 @@ const Movies = () => {
       }
     };
     fetchData();
+    // eslint-disable-next-line
   }, []);
 
   return (

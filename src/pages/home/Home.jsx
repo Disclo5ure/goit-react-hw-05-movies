@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import css from './Home.module.css';
+import { fetchTrending } from 'fetchData/fetchData';
 
 const Home = () => {
   const [trending, setTrending] = useState([]);
@@ -9,11 +9,8 @@ const Home = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        'https://api.themoviedb.org/3/trending/movie/day?api_key=a6f1a167469b842b62ef942bf0dd3d8a'
-      );
-      console.log(response);
-      setTrending(response.data.results);
+      const response = await fetchTrending();
+      setTrending(response);
     };
     fetchData();
   }, []);

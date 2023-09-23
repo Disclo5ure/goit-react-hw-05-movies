@@ -1,8 +1,8 @@
 import { Link, Outlet, useLocation, useParams } from 'react-router-dom';
-import axios from 'axios';
 import { Suspense, useEffect, useState } from 'react';
 import css from './MovieDetails.module.css';
 import { nanoid } from 'nanoid';
+import { fetchMovieDetails } from 'fetchData/fetchData';
 
 const MovieDetails = () => {
   const { id } = useParams();
@@ -11,11 +11,8 @@ const MovieDetails = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}?api_key=a6f1a167469b842b62ef942bf0dd3d8a`
-      );
-      console.log(response);
-      setMovie(response.data);
+      const response = await fetchMovieDetails(id);
+      setMovie(response);
     };
     fetchData();
     // eslint-disable-next-line

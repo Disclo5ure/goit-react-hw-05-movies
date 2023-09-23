@@ -1,38 +1,37 @@
-import axios from 'axios';
 import css from './Movies.module.css';
 import { Link, useLocation, useSearchParams } from 'react-router-dom';
 import { nanoid } from 'nanoid';
 import { useEffect, useState } from 'react';
+import { fetchMovies } from 'fetchData/fetchData';
 
 const Movies = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   const [resultList, setResultList] = useState([]);
+  const [query, setQuery] = useState('');
   const location = useLocation();
 
-  const handleSubmit = async e => {
+  const handleSubmit = e => {
     e.preventDefault();
-    const query = e.currentTarget.query.value;
-    setSearchParams({ query: query });
-    const response = await axios.get(
-      `https://api.themoviedb.org/3/search/movie?query=${query}&api_key=a6f1a167469b842b62ef942bf0dd3d8a`
-    );
-    setResultList(response.data.results);
+    setQuery(e.currentTarget.query.value);
+    setSearchParams({ query: e.currentTarget.query.value });
   };
 
   useEffect(() => {
-    const fetchData = async () => {
-      if (searchParams.get('query')) {
-        const response = await axios.get(
-          `https://api.themoviedb.org/3/search/movie?query=${searchParams.get(
-            'query'
-          )}&api_key=a6f1a167469b842b62ef942bf0dd3d8a`
-        );
-        setResultList(response.data.results);
-      }
+    const fetchData = async query => {
+      const response = await fetchMovies(query);
+      setResultList(response);
     };
-    fetchData();
+    if (query) {
+      setSearchParams({ query: query });
+      fetchData(query);
+    } else if (searchParams.get('query')) {
+      setQuery(searchParams.get('query'));
+    } else {
+      setSearchParams({});
+      setResultList([]);
+    }
     // eslint-disable-next-line
-  }, []);
+  }, [query]);
 
   return (
     <>

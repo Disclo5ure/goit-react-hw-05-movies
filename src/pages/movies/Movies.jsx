@@ -12,23 +12,29 @@ const Movies = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    setQuery(e.currentTarget.query.value);
-    setSearchParams({ query: e.currentTarget.query.value });
+    const query = e.currentTarget.query.value;
+    setQuery(query);
+  };
+
+  const fetchData = async query => {
+    const response = await fetchMovies(query);
+    setResultList(response);
   };
 
   useEffect(() => {
-    const fetchData = async query => {
-      const response = await fetchMovies(query);
-      setResultList(response);
-    };
+    if (searchParams.get('query')) {
+      setQuery(searchParams.get('query'));
+    }
+    // eslint-disable-next-line
+  }, []);
+
+  useEffect(() => {
     if (query) {
       setSearchParams({ query: query });
       fetchData(query);
-    } else if (searchParams.get('query')) {
-      setQuery(searchParams.get('query'));
-    } else {
+    } else if (!query) {
       setSearchParams({});
-      setResultList([]);
+      fetchData(query);
     }
     // eslint-disable-next-line
   }, [query]);

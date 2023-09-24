@@ -1,7 +1,7 @@
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useParams } from 'react-router-dom';
+import { fetchReviews } from 'fetchData/fetchData';
 
 const Reviews = () => {
   const { id } = useParams();
@@ -9,10 +9,8 @@ const Reviews = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/reviews?api_key=a6f1a167469b842b62ef942bf0dd3d8a`
-      );
-      setReviews(response.data.results);
+      const response = await fetchReviews(id);
+      setReviews(response);
     };
     fetchData();
     // eslint-disable-next-line

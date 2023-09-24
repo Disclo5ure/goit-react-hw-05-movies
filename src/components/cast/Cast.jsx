@@ -1,8 +1,8 @@
 import css from './Cast.module.css';
-import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { nanoid } from 'nanoid';
 import { useParams } from 'react-router-dom';
+import { fetchCast } from 'fetchData/fetchData';
 
 const Cast = () => {
   const { id } = useParams();
@@ -10,10 +10,8 @@ const Cast = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      const response = await axios.get(
-        `https://api.themoviedb.org/3/movie/${id}/credits?api_key=a6f1a167469b842b62ef942bf0dd3d8a`
-      );
-      setCast(response.data.cast);
+      const cast = await fetchCast(id);
+      setCast(cast);
     };
     fetchData();
     // eslint-disable-next-line
